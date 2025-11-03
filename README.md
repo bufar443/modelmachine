@@ -76,7 +76,7 @@ class NetworkTrafficAnalyzer:
         
         iso_forest.fit(X_scaled)
         self.models['anomaly'] = iso_forest
-        print("✅ Модель обнаружения аномалий обучена")
+        print(" Модель обнаружения аномалий обучена")
         return iso_forest
     
     def predict_anomalies(self, X):
@@ -232,7 +232,7 @@ class RealTimeMonitor:
                 self.alert_count += 1
                 self.trigger_alert(anomaly_count)
             
-            print(f"📊 Обработано пакетов: {len(predictions)}, Аномалий: {anomaly_count}")
+            print(f" Обработано пакетов: {len(predictions)}, Аномалий: {anomaly_count}")
             
         except Exception as e:
             print(f"Ошибка анализа: {e}")
@@ -242,7 +242,7 @@ class RealTimeMonitor:
     def trigger_alert(self, anomaly_count):
         """Триггер оповещения об атаке"""
         alert_msg = f"""
-        🚨 СЕТЕВАЯ АТАКА ОБНАРУЖЕНА 🚨
+         СЕТЕВАЯ АТАКА ОБНАРУЖЕНА 
         Время: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         Аномальных пакетов: {anomaly_count}
         Всего оповещений: {self.alert_count}
@@ -275,7 +275,7 @@ class RealTimeMonitor:
     
     def simulate_realtime_traffic(self, duration=60):
         """Симуляция реального трафика для демонстрации"""
-        print(f"🎯 Запуск симуляции сетевого трафика на {duration} секунд...")
+        print(f" Запуск симуляции сетевого трафика на {duration} секунд...")
         
         start_time = time.time()
         packet_count = 0
@@ -320,7 +320,7 @@ class RealTimeMonitor:
             
             time.sleep(0.1)  
         
-        print(f"✅ Симуляция завершена. Обработано пакетов: {packet_count}")
+        print(f" Симуляция завершена. Обработано пакетов: {packet_count}")
 
 def visualize_results(all_traffic):
     """Визуализация результатов анализа"""
@@ -350,13 +350,13 @@ def visualize_results(all_traffic):
     plt.tight_layout()
     plt.show()
 def main():
-    print("🎯 ЗАПУСК СИСТЕМЫ АНАЛИЗА СЕТЕВОГО ТРАФИКА")
+    print("ЗАПУСК СИСТЕМЫ АНАЛИЗА СЕТЕВОГО ТРАФИКА")
     print("=" * 50)
 
     analyzer = NetworkTrafficAnalyzer()
     traffic_gen = TrafficGenerator()
 
-    print("\n📊 Этап 1: Генерация тренировочных данных...")
+    print("\n Этап 1: Генерация тренировочных данных...")
     normal_traffic = traffic_gen.generate_normal_traffic(1000)
     attack_traffic = traffic_gen.generate_attack_traffic(300)
     all_traffic = pd.concat([normal_traffic, attack_traffic], ignore_index=True)
@@ -365,20 +365,20 @@ def main():
     print(f"   • Атакующий трафик: {len(attack_traffic)} записей")
     print(f"   • Всего данных: {len(all_traffic)} записей")
 
-    print("\n🔧 Этап 2: Предобработка данных...")
+    print("\n Этап 2: Предобработка данных...")
     X_processed = analyzer.preprocess_data(all_traffic.drop('label', axis=1))
 
-    print("\n🤖 Этап 3: Обучение модели машинного обучения...")
+    print("\n Этап 3: Обучение модели машинного обучения...")
     analyzer.train_anomaly_detection(X_processed)
     
-    print("\n🧪 Этап 4: Тестирование модели...")
+    print("\n Этап 4: Тестирование модели...")
     predictions = analyzer.predict_anomalies(X_processed)
     all_traffic['predicted_anomaly'] = predictions
 
-    print("\n📈 Этап 5: Визуализация результатов...")
+    print("\n Этап 5: Визуализация результатов...")
     visualize_results(all_traffic)
     
-    print("\n📊 СТАТИСТИКА ОБНАРУЖЕНИЯ АТАК:")
+    print("\n СТАТИСТИКА ОБНАРУЖЕНИЯ АТАК:")
     print("=" * 40)
     for label in all_traffic['label'].unique():
         label_data = all_traffic[all_traffic['label'] == label]
@@ -390,23 +390,24 @@ def main():
     print(f"\n   • Всего аномалий обнаружено: {total_anomalies}")
     print(f"   • Эффективность обнаружения: {detection_rate:.1f}%")
     
-    print("\n🌐 Этап 6: Запуск реального мониторинга...")
+    print("\n Этап 6: Запуск реального мониторинга...")
     monitor = RealTimeMonitor(analyzer)
     
     monitor.simulate_realtime_traffic(duration=30)
     
-    print("\n📋 ФИНАЛЬНАЯ СТАТИСТИКА МОНИТОРИНГА:")
+    print("\n ФИНАЛЬНАЯ СТАТИСТИКА МОНИТОРИНГА:")
     print("=" * 40)
     print(f"   • Всего обработано пакетов: {monitor.stats['total_packets']}")
     print(f"   • Обнаружено аномалий: {monitor.stats['anomalies']}")
     print(f"   • Сгенерировано оповещений: {monitor.alert_count}")
     print(f"   • Файл с оповещениями: security_alerts.json")
     
-    print("\n✅ СИСТЕМА УСПЕШНО ЗАВЕРШИЛА РАБОТУ!")
-    print("💡 Оповещения сохранены в формате JSON для интеграции с ELK Stack")
+    print("\n СИСТЕМА УСПЕШНО ЗАВЕРШИЛА РАБОТУ!")
+    print(" Оповещения сохранены в формате JSON для интеграции с ELK Stack")
 
 if __name__ == "__main__":
     import json
     main()
+
 
 
